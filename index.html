@@ -1,0 +1,51 @@
+<head>
+  <title id="title">Greed Game</title>
+  <link rel="shortcut icon" href="images/favicon.ico"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color:#303030;" oncontextmenu="return false">
+    <!-- The sidebar -->
+  <div id="sidebar" class="sidebar">
+    <p><button class="button" id="clearBalls" onclick="clearBalls()">
+      Clear Balls
+    </button>
+    <p><button class="button" id="clearMomentum" onclick="clearMomentum()">
+      Clear Momentum
+    </button>
+    <p><button class="button" id="collisionbutton" onclick="togglecollision()">
+      Simple vs Complex Collisions
+    </button>
+    <p><div id="numballs">Number of Balls: Num balls</div>
+      <input
+      type="range"
+      min="1" max="100" value="1"
+      class="slider" id="numballslider">
+    <p><div id="ballsize">Ball Radius: 1</div>
+      <input
+      type="range"
+      min="5" max="20" value="10"
+      class="slider" id="ballsizeslider">
+    <p><div id="balldensity">Ball Density: 5</div>
+      <input
+      type="range"
+      min="1" max="10" value="5"
+      class="slider" id="balldensityslider">
+    <!-- <a class="active" href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a> -->
+  </div>
+
+  <!-- Page content -->
+  <div id="content" class="content">
+    <canvas
+      id="canvas"
+      style="boarder:1px solid #000000"
+      cursor="none">
+    	Your browser does not support canvas element
+    </canvas>
+  </div>
+
+  <script src="jquery/dist/jquery.slim.min.js"> </script>
+  <script src="index.js"></script>
+</body>

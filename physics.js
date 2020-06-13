@@ -1,35 +1,93 @@
 // This is the fun part.
 
 // called on mouseup
-function newballs() {
+function NewBalls() {
 
   // get the velocity defined by user
-  const velocityx = mouseup.x - mousedown.x
-  const velocityy = mouseup.y - mousedown.y
+  const velocityx = _MOUSEUP_.x - _MOUSEDOWN_.x
+  const velocityy = _MOUSEUP_.y - _MOUSEDOWN_.y
+
+  // set _MAXRADIUS_ as the largest _BALLRADIUS_
+  if (_MAXRADIUS_ < _BALLRADIUS_) _MAXRADIUS_ = _BALLRADIUS_;
 
   // for the number of balls...
-  for (let i = 0; i < numballs; ++i) {
+  for (let i = 0; i < _NUMBALLS_; ++i) {
     // create a new ball
-    balls.push({
-      idx: balls.length, // identify which ball (for use in flagging touches)
-      radius: ballradius, // ball radius
+    _BALLS_.push({
+      idx: _BALLS_.length, // identify which ball (for use in flagging touches)
+      radius: _BALLRADIUS_, // ball radius
       // mass determined by the area of the ball scaled by the density
-      mass: ballradius * ballradius * Math.PI * balldensity,
-      coloridx: ++colortally % palletlength, // get the color idx from the tally
+      mass: _BALLRADIUS_ * _BALLRADIUS_ * Math.PI * _BALLDENSITY_,
       velocity: { x: velocityx, y: velocityy }, // assign the ball the defined velocity
-      // randomize the position sligthly as to avoid overlaps
+      // randomize the position sligthly to avoid overlaps
       position: {
-        x: mousedown.x + Math.random(),
-        y: mousedown.y + Math.random()
+        x: _MOUSEDOWN_.x + Math.random(),
+        y: _MOUSEDOWN_.y + Math.random()
       }
     })
+  }
+}
+
+// check each balls surrounding chunks for neighboring balls
+function CheckBallChunk(ball,grid,Collision) {
+  ball.flag = {}; // clear ball flag (index of interacted balls)
+
+  // get center chunk
+  const x = Math.round(ball.position.x / _MAXRADIUS_);
+  const y = Math.round(ball.position.y / _MAXRADIUS_);
+
+  // for the nine chunks surrounding the ball,
+  // collide with the neighboring balls
+  for (let i = -1; i <= 1; ++i) {
+    for (let j = -1; j <= 1; ++j) {
+      const gridid = `${x+i},${y+j}`; // assemble grid id
+      let chunk = grid[gridid]; // get chunk
+      if (!chunk) grid[gridid] = chunk = []; // define new chunk if none exists
+      else for (const i in chunk) Collision(ball,chunk[i]); // run collision
+      chunk.push(ball); // add ball to chunk
+    }
+  }
+}
+
+// Draw each ball as a circle
+function DrawBall(ball,pallet) {
+  CTX.fillStyle = pallet[ball.idx % pallet.length];
+  CTX.beginPath();
+  CTX.arc(ball.position.x,ball.position.y,ball.radius,0,PI2);
+  CTX.closePath();
+  CTX.fill();
+}
+
+// move the ball by velocity and bounce off walls
+function MoveBall(ball,deltaT,width,height) {
+
+  // move the ball each velocity increment
+  ball.position.x += ball.velocity.x * deltaT;
+  ball.position.y += ball.velocity.y * deltaT;
+
+  // bounce off walls (salt with a little randomness to deal with some bugs)
+  if (ball.position.x < ball.radius && ball.velocity.x < 0) {
+    ball.position.x = ball.radius + Math.random();
+    ball.velocity.x = -ball.velocity.x;
+  }
+  if (ball.position.y < ball.radius && ball.velocity.y < 0) {
+    ball.position.y = ball.radius + Math.random();
+    ball.velocity.y = -ball.velocity.y;
+  }
+  if (ball.position.x > width - ball.radius && ball.velocity.x > 0) {
+    ball.position.x = width - ball.radius - Math.random();
+    ball.velocity.x = -ball.velocity.x;
+  }
+  if (ball.position.y > height - ball.radius && ball.velocity.y > 0) {
+    ball.position.y = height - ball.radius - Math.random();
+    ball.velocity.y = -ball.velocity.y;
   }
 }
 
 // simple impulse calculation
 // forcefully pushes balls apart
 // simply swaps the momenta of each ball if they are touching
-function simplecollision(a,b) {
+function SimpleCollision(a,b) {
   if (a.flag[b.idx]) return; // make sure a haven't interfaced with b yet
   a.flag[b.idx] = true; // flag b as having interfaced with a
 
@@ -65,15 +123,17 @@ function simplecollision(a,b) {
   }
 }
 
-// complex impulse calculation
-// forcefully pushes balls apart
-// swap the components of the momenta aligned with the distance vector between each ball
+// Complex Impulse Calculation
+// Forcefully pushes balls apart
+// Swap the components of the momenta aligned with the distance vector between each ball
+
 // There are some weird behaviors between very small balls and large ones
-function complexcollision(a,b) {
+// This is the primary improvement that can be made on this project.
+function ComplexCollision(a,b) {
   if (a.flag[b.idx]) return; // make sure a haven't interfaced with b yet
   a.flag[b.idx] = true; // flag b as having interfaced with a
 
-  // get the distance vector
+  // get the distance vector and magnitude
   const x = b.position.x - a.position.x;
   const y = b.position.y - a.position.y;
   const dist = Math.sqrt(x*x + y*y);

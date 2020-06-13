@@ -1,32 +1,34 @@
+// Button and Slider event listeners
+
+
 // clear all balls from the map
-function clearballs() {
-  maxradius = 0; // reset the max ball radius
-  balls = []; // clear all balls from the map
+function ClearBalls() {
+  _MAXRADIUS_ = 0; // reset the max ball radius
+  _BALLS_ = []; // clear all balls from the map
 }
 
 // reset the velocity/momentum of all balls
-function clearmomentum() {
-  for (const i in balls) balls[i].velocity = {x:0,y:0}; // zero each velocity
+function ClearMomentum() {
+  for (const i in _BALLS_) _BALLS_[i].velocity = {x:0,y:0}; // zero each velocity
 }
 
 // Pallet Dropdown Detector
-function palletdropdown() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function PalletDropDown() {
+  document.getElementById("palletdropdowncontent").classList.toggle("show");
 }
 
 // Pallet Select Function
-function selectpallet(newpalletname) {
+function SelectPallet(newpalletname) {
   const palletdropdown = document.getElementById('palletdropdown');
-  palletname = newpalletname; // set the global pallet name
+  _PALLETNAME_ = newpalletname; // set the global pallet name
   palletdropdown.innerHTML = "Color Pallet: " + newpalletname;
 }
 
 // Close the pallet dropdown if the user clicks outside of it
-window.onclick = function(event) {
+window.onclick = (event) => {
   if (event.target.matches('.dropbtn')) return;
-  const dropdowns = document.getElementsByClassName("dropdown-content");
-  for (let i = 0; i < dropdowns.length; i++) {
-    const openDropdown = dropdowns[i];
+  for (let i = 0; i < DROPDOWNCONTENT.length; i++) {
+    const openDropdown = DROPDOWNCONTENT[i];
     if (openDropdown.classList.contains('show')) {
       openDropdown.classList.remove('show');
     }
@@ -34,23 +36,41 @@ window.onclick = function(event) {
 }
 
 // toggle collision button listener
-function togglecollision() {
-  const button = document.getElementById('collisionbutton');
-  collisiontoggle = !collisiontoggle; // toggle the collision state
-  button.innerHTML = (collisiontoggle ? "Simple" : "Complex") + " Collisions";
+function ToggleCollision() {
+  _COLLISIONTOGGLE_ = !_COLLISIONTOGGLE_; // toggle the collision state
+  COLLISIONBUTTON.innerHTML = (_COLLISIONTOGGLE_ ? "Simple" : "Complex") + " Collisions";
 }
 
 // show grid toggle button listener
-function toggleshowgrid() {
-  const button = document.getElementById('showgridbutton');
-  showgridtoggle = !showgridtoggle; // toggle the show grid state
-  button.innerHTML = (showgridtoggle ? "Hide" : "Show") + " Grid";
+function ToggleShowGrid() {
+  _SHOWGRIDTOGGLE_ = !_SHOWGRIDTOGGLE_; // toggle the show grid state
+  SHOWGRIDBUTTON.innerHTML = (_SHOWGRIDTOGGLE_ ? "Hide" : "Show") + " Grid";
 }
 
-$(content).mousedown(e => mousedown = getmouse(e));
-$(content).mousemove(e => mouseup = getmouse(e));
-$(content).mouseup(e => {
-  mouseup = getmouse(e);
-  newballs();
-  mousedown = mouseup = null;
+// get mouse location from given mouse event listener
+function GetMouse(e) {
+  return {x:e.offsetX,y:e.offsetY};
+}
+
+$(CONTENT).mousedown(e => _MOUSEDOWN_ = GetMouse(e));
+$(CONTENT).mousemove(e => _MOUSEUP_ = GetMouse(e));
+$(CONTENT).mouseup(e => {
+  _MOUSEUP_ = GetMouse(e);
+  if (_MOUSEDOWN_) NewBalls();
+  _MOUSEDOWN_ = _MOUSEUP_ = null;
 });
+
+NUMBALLSSLIDER.oninput = () => {
+  _NUMBALLS_ = parseInt(NUMBALLSSLIDER.value);
+  NUMBALLSHTML.innerHTML = `Number of Balls: ${_NUMBALLS_}`;
+}
+
+BALLRADIUSSLIDER.oninput = () => {
+  _BALLRADIUS_ = parseInt(BALLRADIUSSLIDER.value);
+  BALLRADIUSHTML.innerHTML = `Ball Radius: ${_BALLRADIUS_}`;
+}
+
+BALLDENSITYSLIDER.oninput = () => {
+  _BALLDENSITY_ = parseInt(BALLDENSITYSLIDER.value);
+  BALLDENSITYHTML.innerHTML = `Ball Density: ${_BALLDENSITY_}`;
+}

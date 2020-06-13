@@ -14,7 +14,7 @@ function NewBalls() {
   for (let i = 0; i < _NUMBALLS_; ++i) {
     // create a new ball
     _BALLS_.push({
-      idx: _BALLS_.length, // identify which ball (for use in flagging touches)
+      index: _BALLS_.length, // identify which ball (for use in flagging touches)
       radius: _BALLRADIUS_, // ball radius
       // mass determined by the area of the ball scaled by the density
       mass: _BALLRADIUS_ * _BALLRADIUS_ * Math.PI * _BALLDENSITY_,
@@ -51,7 +51,7 @@ function CheckBallChunk(ball,grid,Collision) {
 
 // Draw each ball as a circle
 function DrawBall(ball,pallet) {
-  CTX.fillStyle = pallet[ball.idx % pallet.length];
+  CTX.fillStyle = pallet[ball.index % pallet.length];
   CTX.beginPath();
   CTX.arc(ball.position.x,ball.position.y,ball.radius,0,PI2);
   CTX.closePath();
@@ -88,8 +88,8 @@ function MoveBall(ball,deltaT,width,height) {
 // forcefully pushes balls apart
 // simply swaps the momenta of each ball if they are touching
 function SimpleCollision(a,b) {
-  if (a.flag[b.idx]) return; // make sure a haven't interfaced with b yet
-  a.flag[b.idx] = true; // flag b as having interfaced with a
+  if (a.flag[b.index]) return; // make sure a haven't interfaced with b yet
+  a.flag[b.index] = true; // flag b as having interfaced with a
 
   // get the distance vector
   const x = b.position.x - a.position.x;
@@ -130,8 +130,8 @@ function SimpleCollision(a,b) {
 // There are some weird behaviors between very small balls and large ones
 // This is the primary improvement that can be made on this project.
 function ComplexCollision(a,b) {
-  if (a.flag[b.idx]) return; // make sure a haven't interfaced with b yet
-  a.flag[b.idx] = true; // flag b as having interfaced with a
+  if (a.flag[b.index]) return; // make sure a haven't interfaced with b yet
+  a.flag[b.index] = true; // flag b as having interfaced with a
 
   // get the distance vector and magnitude
   const x = b.position.x - a.position.x;

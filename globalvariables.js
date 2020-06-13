@@ -17,8 +17,8 @@ let _MOUSEDOWN_ = null, _MOUSEUP_ = null;
 
 const COLLISIONBUTTON = document.getElementById("collisionbutton");
 let _COLLISIONTOGGLE_ = true; // collision type (true: simple, false: complex)
-const SHOWGRIDBUTTON = document.getElementById("showgridbutton");
-let _SHOWGRIDTOGGLE_ = false; // collision grid draw (true: show, false: hide)
+const SHOWCHUNKBUTTON = document.getElementById("showchunksbutton");
+let _SHOWCHUNKTOGGLE_ = false; // collision chunks draw (true: show, false: hide)
 
 const PALLETDROPDOWN = document.getElementById("palletdropdowncontent");
 const DROPDOWNCONTENT = document.getElementsByClassName("dropdown-content");
@@ -44,13 +44,13 @@ let _BALLS_ = []; // list of balls on screen
 
 const NUMBALLSSLIDER = document.getElementById("numballsslider");
 const NUMBALLSHTML = document.getElementById("numballs");
-let _NUMBALLS_ = 1;
+let _NUMBALLS_ = parseInt(NUMBALLSSLIDER.value);
 
 const BALLRADIUSSLIDER = document.getElementById("ballradiusslider");
 const BALLRADIUSHTML = document.getElementById("ballradius");
-let _BALLRADIUS_ = 5;
+let _BALLRADIUS_ = parseInt(BALLRADIUSSLIDER.value);
 let _MAXRADIUS_ = 0; // The size of the largest ball on screen
 
 const BALLDENSITYSLIDER = document.getElementById("balldensityslider");
 const BALLDENSITYHTML = document.getElementById("balldensity");
-let _BALLDENSITY_ = 5;
+let _BALLDENSITY_ = parseInt(BALLDENSITYSLIDER.value);

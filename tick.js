@@ -1,3 +1,8 @@
+/*
+  Function called every tick to
+  calculate collisions between balls and draw and move them accordingly.
+*/
+
 function Tick() {
 
   // get interframe deltaT
@@ -23,8 +28,8 @@ function Tick() {
   // check each balls surrounding chunks for neighboring balls
   for (const i in _BALLS_) CheckBallChunk(_BALLS_[i],grid,Collision);
 
-  // draw grid chunks which balls are in
-  if (_SHOWGRIDTOGGLE_) {
+  // draw chunks which balls are in
+  if (_SHOWCHUNKTOGGLE_) {
     CTX.fillStyle = "#505050";
     for (const i in grid) {
       let [x,y] = i.split(",");
@@ -37,7 +42,8 @@ function Tick() {
     }
   }
 
-  const pallet = _PALLETS_[_PALLETNAME_];
+  const pallet = _PALLETS_[_PALLETNAME_]; // Get current color pallet
+  // Draw and Move each ball
   for (const i in _BALLS_) {
     DrawBall(_BALLS_[i],pallet);
     MoveBall(_BALLS_[i],deltaT,width,height);
@@ -53,5 +59,6 @@ function Tick() {
     CTX.stroke();
   }
 
-  window.requestAnimationFrame(Tick);
+  // Game Loop
+  window.requestAnimationFrame(Tick); // ask window to call Tick again
 }

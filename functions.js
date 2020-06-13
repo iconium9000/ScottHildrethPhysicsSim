@@ -1,6 +1,5 @@
 // Button and Slider event listeners
 
-
 // clear all balls from the map
 function ClearBalls() {
   _MAXRADIUS_ = 0; // reset the max ball radius
@@ -41,10 +40,10 @@ function ToggleCollision() {
   COLLISIONBUTTON.innerHTML = (_COLLISIONTOGGLE_ ? "Simple" : "Complex") + " Collisions";
 }
 
-// show grid toggle button listener
-function ToggleShowGrid() {
-  _SHOWGRIDTOGGLE_ = !_SHOWGRIDTOGGLE_; // toggle the show grid state
-  SHOWGRIDBUTTON.innerHTML = (_SHOWGRIDTOGGLE_ ? "Hide" : "Show") + " Grid";
+// show chunks toggle button listener
+function ToggleShowChunk() {
+  _SHOWCHUNKTOGGLE_ = !_SHOWCHUNKTOGGLE_; // toggle the show chunks state
+  SHOWCHUNKBUTTON.innerHTML = (_SHOWCHUNKTOGGLE_ ? "Hide" : "Show") + " Chunks";
 }
 
 // get mouse location from given mouse event listener

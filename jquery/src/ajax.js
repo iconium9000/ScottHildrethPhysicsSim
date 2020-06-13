@@ -309,7 +309,7 @@ jQuery.extend( {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
 		/*
-		timeout: 0,
+		_TIME_out: 0,
 		data: null,
 		dataType: null,
 		username: null,
@@ -404,8 +404,8 @@ jQuery.extend( {
 			responseHeadersString,
 			responseHeaders,
 
-			// timeout handle
-			timeoutTimer,
+			// _TIME_out handle
+			_TIME_outTimer,
 
 			// Url cleanup var
 			urlAnchor,
@@ -687,10 +687,10 @@ jQuery.extend( {
 			}
 
 			// Timeout
-			if ( s.async && s.timeout > 0 ) {
-				timeoutTimer = window.setTimeout( function() {
-					jqXHR.abort( "timeout" );
-				}, s.timeout );
+			if ( s.async && s._TIME_out > 0 ) {
+				_TIME_outTimer = window.setTimeout( function() {
+					jqXHR.abort( "_TIME_out" );
+				}, s._TIME_out );
 			}
 
 			try {
@@ -720,9 +720,9 @@ jQuery.extend( {
 
 			completed = true;
 
-			// Clear timeout if it exists
-			if ( timeoutTimer ) {
-				window.clearTimeout( timeoutTimer );
+			// Clear _TIME_out if it exists
+			if ( _TIME_outTimer ) {
+				window.clearTimeout( _TIME_outTimer );
 			}
 
 			// Dereference transport for early garbage collection

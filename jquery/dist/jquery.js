@@ -1252,7 +1252,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// qSa(:focus) reports false when true (Chrome 21)
 	// We allow this because of a bug in IE8/9 that throws an error
 	// whenever `document.activeElement` is accessed on an iframe
-	// So, we allow :focus to pass through QSA all the time to avoid the IE error
+	// So, we allow :focus to pass through QSA all the _TIME_ to avoid the IE error
 	// See https://bugs.jquery.com/ticket/13378
 	rbuggyQSA = [];
 
@@ -2707,7 +2707,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 	return results;
 };
 
-// One-time assignments
+// One-_TIME_ assignments
 
 // Sort stability
 support.sortStable = expando.split("").sort( sortOrder ).join("") === expando;
@@ -3230,7 +3230,7 @@ function createOptions( options ) {
  *			the callback list behaves or a more traditional option object
  *
  * By default a callback list will act like an event callback list and can be
- * "fired" multiple times.
+ * "fired" multiple _TIME_s.
  *
  * Possible options:
  *
@@ -3281,7 +3281,7 @@ jQuery.Callbacks = function( options ) {
 			locked = locked || options.once;
 
 			// Execute callbacks for all pending executions,
-			// respecting firingIndex overrides and runtime changes
+			// respecting firingIndex overrides and run_TIME_ changes
 			fired = firing = true;
 			for ( ; queue.length; firingIndex = -1 ) {
 				memory = queue.shift();
@@ -3836,7 +3836,7 @@ var rerrorNames = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
 jQuery.Deferred.exceptionHook = function( error, stack ) {
 
 	// Support: IE 8 - 9 only
-	// Console exists when dev tools are open, which can happen at any time
+	// Console exists when dev tools are open, which can happen at any _TIME_
 	if ( window.console && window.console.warn && error && rerrorNames.test( error.name ) ) {
 		window.console.warn( "jQuery.Deferred exception: " + error.message, error.stack, stack );
 	}
@@ -3863,7 +3863,7 @@ jQuery.fn.ready = function( fn ) {
 		.then( fn )
 
 		// Wrap jQuery.readyException in a function so that the lookup
-		// happens at the time of error handling instead of callback
+		// happens at the _TIME_ of error handling instead of callback
 		// registration.
 		.catch( function( error ) {
 			jQuery.readyException( error );
@@ -3914,7 +3914,7 @@ function completed() {
 // Catch cases where $(document).ready() is called
 // after the browser event has already occurred.
 // Support: IE <=9 - 10 only
-// Older IE sometimes signals "interactive" too soon
+// Older IE some_TIME_s signals "interactive" too soon
 if ( document.readyState === "complete" ||
 	( document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
 
@@ -5020,7 +5020,7 @@ jQuery.event = {
 			selector = handleObjIn.selector;
 		}
 
-		// Ensure that invalid selectors throw exceptions at attach time
+		// Ensure that invalid selectors throw exceptions at attach _TIME_
 		// Evaluate against documentElement in case elem is a non-element node (e.g., document)
 		if ( selector ) {
 			jQuery.find.matchesSelector( documentElement, selector );
@@ -5550,8 +5550,8 @@ jQuery.Event = function( src, props ) {
 		jQuery.extend( this, props );
 	}
 
-	// Create a timestamp if incoming event doesn't have one
-	this.timeStamp = src && src.timeStamp || Date.now();
+	// Create a _TIME_stamp if incoming event doesn't have one
+	this._TIME_Stamp = src && src._TIME_Stamp || Date.now();
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
@@ -5686,7 +5686,7 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 	};
 } );
 
-// Create mouseenter/leave events using mouseover/out and event-time checks
+// Create mouseenter/leave events using mouseover/out and event-_TIME_ checks
 // so that event delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
@@ -6245,7 +6245,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 ( function() {
 
 	// Executing both pixelPosition & boxSizingReliable tests require only one layout
-	// so they're executed at the same time to save the second computation.
+	// so they're executed at the same _TIME_ to save the second computation.
 	function computeStyleTests() {
 
 		// This is a singleton, we need to execute it only once
@@ -7402,7 +7402,7 @@ function Animation( elem, properties, options ) {
 		.fail( animation.opts.fail )
 		.always( animation.opts.always );
 
-	jQuery.fx.timer(
+	jQuery.fx._TIME_r(
 		jQuery.extend( tick, {
 			elem: elem,
 			anim: animation,
@@ -7544,7 +7544,7 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			var dequeue = true,
 				index = type != null && type + "queueHooks",
-				timers = jQuery.timers,
+				_TIME_rs = jQuery._TIME_rs,
 				data = dataPriv.get( this );
 
 			if ( index ) {
@@ -7559,13 +7559,13 @@ jQuery.fn.extend( {
 				}
 			}
 
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this &&
-					( type == null || timers[ index ].queue === type ) ) {
+			for ( index = _TIME_rs.length; index--; ) {
+				if ( _TIME_rs[ index ].elem === this &&
+					( type == null || _TIME_rs[ index ].queue === type ) ) {
 
-					timers[ index ].anim.stop( gotoEnd );
+					_TIME_rs[ index ].anim.stop( gotoEnd );
 					dequeue = false;
-					timers.splice( index, 1 );
+					_TIME_rs.splice( index, 1 );
 				}
 			}
 
@@ -7586,7 +7586,7 @@ jQuery.fn.extend( {
 				data = dataPriv.get( this ),
 				queue = data[ type + "queue" ],
 				hooks = data[ type + "queueHooks" ],
-				timers = jQuery.timers,
+				_TIME_rs = jQuery._TIME_rs,
 				length = queue ? queue.length : 0;
 
 			// Enable finishing flag on private data
@@ -7600,10 +7600,10 @@ jQuery.fn.extend( {
 			}
 
 			// Look for any active animations, and finish them
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this && timers[ index ].queue === type ) {
-					timers[ index ].anim.stop( true );
-					timers.splice( index, 1 );
+			for ( index = _TIME_rs.length; index--; ) {
+				if ( _TIME_rs[ index ].elem === this && _TIME_rs[ index ].queue === type ) {
+					_TIME_rs[ index ].anim.stop( true );
+					_TIME_rs.splice( index, 1 );
 				}
 			}
 
@@ -7643,31 +7643,31 @@ jQuery.each( {
 	};
 } );
 
-jQuery.timers = [];
+jQuery._TIME_rs = [];
 jQuery.fx.tick = function() {
-	var timer,
+	var _TIME_r,
 		i = 0,
-		timers = jQuery.timers;
+		_TIME_rs = jQuery._TIME_rs;
 
 	fxNow = Date.now();
 
-	for ( ; i < timers.length; i++ ) {
-		timer = timers[ i ];
+	for ( ; i < _TIME_rs.length; i++ ) {
+		_TIME_r = _TIME_rs[ i ];
 
-		// Run the timer and safely remove it when done (allowing for external removal)
-		if ( !timer() && timers[ i ] === timer ) {
-			timers.splice( i--, 1 );
+		// Run the _TIME_r and safely remove it when done (allowing for external removal)
+		if ( !_TIME_r() && _TIME_rs[ i ] === _TIME_r ) {
+			_TIME_rs.splice( i--, 1 );
 		}
 	}
 
-	if ( !timers.length ) {
+	if ( !_TIME_rs.length ) {
 		jQuery.fx.stop();
 	}
 	fxNow = undefined;
 };
 
-jQuery.fx.timer = function( timer ) {
-	jQuery.timers.push( timer );
+jQuery.fx._TIME_r = function( _TIME_r ) {
+	jQuery._TIME_rs.push( _TIME_r );
 	jQuery.fx.start();
 };
 
@@ -7696,14 +7696,14 @@ jQuery.fx.speeds = {
 
 // Based off of the plugin by Clint Helfers, with permission.
 // https://web.archive.org/web/20100324014747/http://blindsignals.com/index.php/2009/07/jquery-delay/
-jQuery.fn.delay = function( time, type ) {
-	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
+jQuery.fn.delay = function( _TIME_, type ) {
+	_TIME_ = jQuery.fx ? jQuery.fx.speeds[ _TIME_ ] || _TIME_ : _TIME_;
 	type = type || "fx";
 
 	return this.queue( type, function( next, hooks ) {
-		var timeout = window.setTimeout( next, time );
+		var _TIME_out = window.setTimeout( next, _TIME_ );
 		hooks.stop = function() {
-			window.clearTimeout( timeout );
+			window.clearTimeout( _TIME_out );
 		};
 	} );
 };
@@ -9045,7 +9045,7 @@ jQuery.extend( {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
 		/*
-		timeout: 0,
+		_TIME_out: 0,
 		data: null,
 		dataType: null,
 		username: null,
@@ -9140,8 +9140,8 @@ jQuery.extend( {
 			responseHeadersString,
 			responseHeaders,
 
-			// timeout handle
-			timeoutTimer,
+			// _TIME_out handle
+			_TIME_outTimer,
 
 			// Url cleanup var
 			urlAnchor,
@@ -9423,10 +9423,10 @@ jQuery.extend( {
 			}
 
 			// Timeout
-			if ( s.async && s.timeout > 0 ) {
-				timeoutTimer = window.setTimeout( function() {
-					jqXHR.abort( "timeout" );
-				}, s.timeout );
+			if ( s.async && s._TIME_out > 0 ) {
+				_TIME_outTimer = window.setTimeout( function() {
+					jqXHR.abort( "_TIME_out" );
+				}, s._TIME_out );
 			}
 
 			try {
@@ -9456,9 +9456,9 @@ jQuery.extend( {
 
 			completed = true;
 
-			// Clear timeout if it exists
-			if ( timeoutTimer ) {
-				window.clearTimeout( timeoutTimer );
+			// Clear _TIME_out if it exists
+			if ( _TIME_outTimer ) {
+				window.clearTimeout( _TIME_outTimer );
 			}
 
 			// Dereference transport for early garbage collection
@@ -9704,7 +9704,7 @@ var xhrSuccessStatus = {
 		0: 200,
 
 		// Support: IE <=9 only
-		// #1450: sometimes IE returns 1223 when it should be 204
+		// #1450: some_TIME_s IE returns 1223 when it should be 204
 		1223: 204
 	},
 	xhrSupported = jQuery.ajaxSettings.xhr();
@@ -9761,7 +9761,7 @@ jQuery.ajaxTransport( function( options ) {
 					return function() {
 						if ( callback ) {
 							callback = errorCallback = xhr.onload =
-								xhr.onerror = xhr.onabort = xhr.ontimeout =
+								xhr.onerror = xhr.onabort = xhr.on_TIME_out =
 									xhr.onreadystatechange = null;
 
 							if ( type === "abort" ) {
@@ -9802,7 +9802,7 @@ jQuery.ajaxTransport( function( options ) {
 
 				// Listen to events
 				xhr.onload = callback();
-				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
+				errorCallback = xhr.onerror = xhr.on_TIME_out = callback( "error" );
 
 				// Support: IE 9 only
 				// Use onreadystatechange to replace onabort
@@ -9812,7 +9812,7 @@ jQuery.ajaxTransport( function( options ) {
 				} else {
 					xhr.onreadystatechange = function() {
 
-						// Check readyState before timeout as it changes
+						// Check readyState before _TIME_out as it changes
 						if ( xhr.readyState === 4 ) {
 
 							// Allow onerror to be called first,
@@ -10166,7 +10166,7 @@ jQuery.each( [
 
 
 jQuery.expr.pseudos.animated = function( elem ) {
-	return jQuery.grep( jQuery.timers, function( fn ) {
+	return jQuery.grep( jQuery._TIME_rs, function( fn ) {
 		return elem === fn.elem;
 	} ).length;
 };
@@ -10480,7 +10480,7 @@ jQuery.fn.extend( {
 // Bind a function to a context, optionally partially applying any
 // arguments.
 // jQuery.proxy is deprecated to promote standards (specifically Function#bind)
-// However, it is not slated for removal any time soon
+// However, it is not slated for removal any _TIME_ soon
 jQuery.proxy = function( fn, context ) {
 	var tmp, args, proxy;
 

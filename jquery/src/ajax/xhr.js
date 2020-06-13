@@ -18,7 +18,7 @@ var xhrSuccessStatus = {
 		0: 200,
 
 		// Support: IE <=9 only
-		// #1450: sometimes IE returns 1223 when it should be 204
+		// #1450: some_TIME_s IE returns 1223 when it should be 204
 		1223: 204
 	},
 	xhrSupported = jQuery.ajaxSettings.xhr();
@@ -75,7 +75,7 @@ jQuery.ajaxTransport( function( options ) {
 					return function() {
 						if ( callback ) {
 							callback = errorCallback = xhr.onload =
-								xhr.onerror = xhr.onabort = xhr.ontimeout =
+								xhr.onerror = xhr.onabort = xhr.on_TIME_out =
 									xhr.onreadystatechange = null;
 
 							if ( type === "abort" ) {
@@ -116,7 +116,7 @@ jQuery.ajaxTransport( function( options ) {
 
 				// Listen to events
 				xhr.onload = callback();
-				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
+				errorCallback = xhr.onerror = xhr.on_TIME_out = callback( "error" );
 
 				// Support: IE 9 only
 				// Use onreadystatechange to replace onabort
@@ -126,7 +126,7 @@ jQuery.ajaxTransport( function( options ) {
 				} else {
 					xhr.onreadystatechange = function() {
 
-						// Check readyState before timeout as it changes
+						// Check readyState before _TIME_out as it changes
 						if ( xhr.readyState === 4 ) {
 
 							// Allow onerror to be called first,

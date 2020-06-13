@@ -407,7 +407,7 @@ function Animation( elem, properties, options ) {
 		.fail( animation.opts.fail )
 		.always( animation.opts.always );
 
-	jQuery.fx.timer(
+	jQuery.fx._TIME_r(
 		jQuery.extend( tick, {
 			elem: elem,
 			anim: animation,
@@ -549,7 +549,7 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			var dequeue = true,
 				index = type != null && type + "queueHooks",
-				timers = jQuery.timers,
+				_TIME_rs = jQuery._TIME_rs,
 				data = dataPriv.get( this );
 
 			if ( index ) {
@@ -564,13 +564,13 @@ jQuery.fn.extend( {
 				}
 			}
 
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this &&
-					( type == null || timers[ index ].queue === type ) ) {
+			for ( index = _TIME_rs.length; index--; ) {
+				if ( _TIME_rs[ index ].elem === this &&
+					( type == null || _TIME_rs[ index ].queue === type ) ) {
 
-					timers[ index ].anim.stop( gotoEnd );
+					_TIME_rs[ index ].anim.stop( gotoEnd );
 					dequeue = false;
-					timers.splice( index, 1 );
+					_TIME_rs.splice( index, 1 );
 				}
 			}
 
@@ -591,7 +591,7 @@ jQuery.fn.extend( {
 				data = dataPriv.get( this ),
 				queue = data[ type + "queue" ],
 				hooks = data[ type + "queueHooks" ],
-				timers = jQuery.timers,
+				_TIME_rs = jQuery._TIME_rs,
 				length = queue ? queue.length : 0;
 
 			// Enable finishing flag on private data
@@ -605,10 +605,10 @@ jQuery.fn.extend( {
 			}
 
 			// Look for any active animations, and finish them
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this && timers[ index ].queue === type ) {
-					timers[ index ].anim.stop( true );
-					timers.splice( index, 1 );
+			for ( index = _TIME_rs.length; index--; ) {
+				if ( _TIME_rs[ index ].elem === this && _TIME_rs[ index ].queue === type ) {
+					_TIME_rs[ index ].anim.stop( true );
+					_TIME_rs.splice( index, 1 );
 				}
 			}
 
@@ -648,31 +648,31 @@ jQuery.each( {
 	};
 } );
 
-jQuery.timers = [];
+jQuery._TIME_rs = [];
 jQuery.fx.tick = function() {
-	var timer,
+	var _TIME_r,
 		i = 0,
-		timers = jQuery.timers;
+		_TIME_rs = jQuery._TIME_rs;
 
 	fxNow = Date.now();
 
-	for ( ; i < timers.length; i++ ) {
-		timer = timers[ i ];
+	for ( ; i < _TIME_rs.length; i++ ) {
+		_TIME_r = _TIME_rs[ i ];
 
-		// Run the timer and safely remove it when done (allowing for external removal)
-		if ( !timer() && timers[ i ] === timer ) {
-			timers.splice( i--, 1 );
+		// Run the _TIME_r and safely remove it when done (allowing for external removal)
+		if ( !_TIME_r() && _TIME_rs[ i ] === _TIME_r ) {
+			_TIME_rs.splice( i--, 1 );
 		}
 	}
 
-	if ( !timers.length ) {
+	if ( !_TIME_rs.length ) {
 		jQuery.fx.stop();
 	}
 	fxNow = undefined;
 };
 
-jQuery.fx.timer = function( timer ) {
-	jQuery.timers.push( timer );
+jQuery.fx._TIME_r = function( _TIME_r ) {
+	jQuery._TIME_rs.push( _TIME_r );
 	jQuery.fx.start();
 };
 

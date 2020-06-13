@@ -8,14 +8,14 @@ define( [
 
 // Based off of the plugin by Clint Helfers, with permission.
 // https://web.archive.org/web/20100324014747/http://blindsignals.com/index.php/2009/07/jquery-delay/
-jQuery.fn.delay = function( time, type ) {
-	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
+jQuery.fn.delay = function( _TIME_, type ) {
+	_TIME_ = jQuery.fx ? jQuery.fx.speeds[ _TIME_ ] || _TIME_ : _TIME_;
 	type = type || "fx";
 
 	return this.queue( type, function( next, hooks ) {
-		var timeout = window.setTimeout( next, time );
+		var _TIME_out = window.setTimeout( next, _TIME_ );
 		hooks.stop = function() {
-			window.clearTimeout( timeout );
+			window.clearTimeout( _TIME_out );
 		};
 	} );
 };

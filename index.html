@@ -4,48 +4,54 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body style="background-color:#303030;" oncontextmenu="return false">
-    <!-- The sidebar -->
+
+  <!-- The sidebar -->
   <div id="sidebar" class="sidebar">
-    <p><button class="button" id="clearBalls" onclick="clearBalls()">
-      Clear Balls
-    </button>
-    <p><button class="button" id="clearMomentum" onclick="clearMomentum()">
-      Clear Momentum
-    </button>
-    <p><button class="button" id="collisionbutton" onclick="togglecollision()">
-      Simple vs Complex Collisions
-    </button>
-    <p><div id="numballs">Number of Balls: Num balls</div>
-      <input
-      type="range"
-      min="1" max="100" value="1"
-      class="slider" id="numballslider">
-    <p><div id="ballsize">Ball Radius: 1</div>
-      <input
-      type="range"
-      min="5" max="20" value="10"
-      class="slider" id="ballsizeslider">
+
+    <!-- color pallet dropdown -->
+    <div class="dropdown">
+      <button onclick="palletdropdown()" class="dropbtn" id="palletdropdown">
+        Color Pallet: The Incredibles
+      </button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="javascript:selectpallet('Monsters, Inc.')">Monsters, Inc.</a>
+        <a href="javascript:selectpallet('Toy Story')">Toy Story</a>
+        <a href="javascript:selectpallet('Cars')">Cars</a>
+        <a href="javascript:selectpallet('Finding Nemo')">Finding Nemo</a>
+        <a href="javascript:selectpallet('The Incredibles')">The Incredibles</a>
+        <a href="javascript:selectpallet('Wall-E')">Wall-E</a>
+        <a href="javascript:selectpallet('Inside Out')">Inside Out</a>
+        <a href="javascript:selectpallet('Coco')">Coco</a>
+      </div>
+    </div>
+
+    <!-- buttons -->
+    <p><button class="button" id="clearballs" onclick="clearballs()">Clear Balls</button>
+    <p><button class="button" id="clearmomentum" onclick="clearmomentum()">Clear Momentum</button>
+    <p><button class="button" id="collisionbutton" onclick="togglecollision()">Simple Collisions</button>
+    <p><button class="button" id="showgridbutton" onclick="toggleshowgrid()">Show Grid</button>
+
+    <!-- sliders -->
+    <p><div id="numballs">Number of Balls: 1</div>
+      <input type="range" min="1" max="500" value="1" class="slider" id="numballsslider">
+    <p><div id="ballradius">Ball Radius: 1</div>
+      <input type="range" min="1" max="20" value="10" class="slider" id="ballradiusslider">
     <p><div id="balldensity">Ball Density: 5</div>
-      <input
-      type="range"
-      min="1" max="10" value="5"
-      class="slider" id="balldensityslider">
-    <!-- <a class="active" href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a> -->
+      <input type="range" min="1" max="20" value="5" class="slider" id="balldensityslider">
   </div>
 
   <!-- Page content -->
   <div id="content" class="content">
-    <canvas
-      id="canvas"
-      style="boarder:1px solid #000000"
-      cursor="none">
+    <canvas id="canvas" style="boarder:1px solid #000000" cursor="none">
     	Your browser does not support canvas element
     </canvas>
   </div>
 
+  <!-- JavaScript -->
   <script src="jquery/dist/jquery.slim.min.js"> </script>
-  <script src="index.js"></script>
+  <script src="globalvariables.js"></script>
+  <script src="physics.js"></script>
+  <script src="tick.js"></script>
+  <script src="functions.js"></script>
+  <script type="text/javascript"> tick(); </script>
 </body>

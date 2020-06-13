@@ -36,7 +36,7 @@ jQuery.fn.extend( {
 // Bind a function to a context, optionally partially applying any
 // arguments.
 // jQuery.proxy is deprecated to promote standards (specifically Function#bind)
-// However, it is not slated for removal any time soon
+// However, it is not slated for removal any _TIME_ soon
 jQuery.proxy = function( fn, context ) {
 	var tmp, args, proxy;
 

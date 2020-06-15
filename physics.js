@@ -99,36 +99,38 @@ function SimpleCollision(a,b) {
   // check if a and b are touching
   if (dist >= a.radius + b.radius) return;
 
+  const mass = a.mass + b.mass;
+
   // calculate the padding to force the balls apart
-  const pad = (a.radius + b.radius - dist) / 2 / dist;
+  const pad = (dist - a.radius - b.radius) / dist;
+  const apad = pad * b.mass / mass;
+  const bpad = 1 - pad * a.mass / mass;
 
   // force the balls apart
-  a.position.x -= x * pad; a.position.y -= y * pad;
-  b.position.x += x * pad; b.position.y += y * pad;
+  b.position.x = a.position.x + x * bpad;
+  b.position.y = a.position.y + y * bpad;
+  a.position.x += x * apad;
+  a.position.y += y * apad;
+
+  const centervx = (a.velocity.x * a.mass + b.velocity.x * b.mass) / mass;
+  const centervy = (a.velocity.y * a.mass + b.velocity.y * b.mass) / mass;
+
+  const ax = a.velocity.x - centervx, ay = a.velocity.y - centervy;
+  const bx = b.velocity.x - centervx, by = b.velocity.y - centervy;
 
   // calculate the mass ratio between each ball
   const massratio = b.mass / a.mass
 
-  // save momenta
-  const atemp = a.velocity, btemp = b.velocity;
+  a.velocity.x += bx * massratio - ax;
+  a.velocity.y += by * massratio - ay;
 
-  // swap the momenta
-  a.velocity = {
-    x: btemp.x * massratio,
-    y: btemp.y * massratio
-  }
-  b.velocity = {
-    x: atemp.x / massratio,
-    y: atemp.y / massratio
-  }
+  b.velocity.x += ax / massratio - bx;
+  b.velocity.y += ay / massratio - by;
 }
 
 // Complex Impulse Calculation
 // Forcefully pushes balls apart
 // Swap the components of the momenta aligned with the distance vector between each ball
-
-// There are some weird behaviors between very small balls and large ones
-// This is the primary improvement that can be made on this project.
 function ComplexCollision(a,b) {
   if (a.flag[b.index]) return; // make sure a haven't interfaced with b yet
   a.flag[b.index] = true; // flag b as having interfaced with a
@@ -141,12 +143,18 @@ function ComplexCollision(a,b) {
   // check if a and b are touching
   if (dist >= a.radius + b.radius) return;
 
+  const mass = a.mass + b.mass;
+
   // calculate the padding to force the balls apart
-  const pad = (a.radius + b.radius - dist) / 2 / dist;
+  const pad = (dist - a.radius - b.radius) / dist;
+  const apad = pad * b.mass / mass;
+  const bpad = 1 - pad * a.mass / mass;
 
   // force the balls apart
-  a.position.x -= x * pad; a.position.y -= y * pad;
-  b.position.x += x * pad; b.position.y += y * pad;
+  b.position.x = a.position.x + x * bpad;
+  b.position.y = a.position.y + y * bpad;
+  a.position.x += x * apad;
+  a.position.y += y * apad;
 
   // calculate the mass ratio between each ball
   const massratio = b.mass / a.mass
@@ -154,13 +162,19 @@ function ComplexCollision(a,b) {
   // get the unitized version of the distance vector
   const ux = x / dist, uy = y / dist;
 
-  // get the lengths of the velocity components aligned with the distance vector
-  let adot = a.velocity.x * ux + a.velocity.y * uy;
-  let bdot = b.velocity.x * ux + b.velocity.y * uy;
+  const masssum = a.mass + b.mass;
+  const centervx = (a.velocity.x * a.mass + b.velocity.x * b.mass) / masssum;
+  const centervy = (a.velocity.y * a.mass + b.velocity.y * b.mass) / masssum;
 
-  // swap the components aligned with the distance vector
+  const ax = a.velocity.x - centervx, ay = a.velocity.y - centervy;
+  const bx = b.velocity.x - centervx, by = b.velocity.y - centervy;
+
+  const adot = ax * ux + ay * uy;
+  const bdot = bx * ux + by * uy;
+
   a.velocity.x += ux * (bdot * massratio - adot);
   a.velocity.y += uy * (bdot * massratio - adot);
+
   b.velocity.x += ux * (adot / massratio - bdot);
   b.velocity.y += uy * (adot / massratio - bdot);
 }
